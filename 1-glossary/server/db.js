@@ -2,7 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 //Establish a connection to MongoDB
-mongoose.connect(`mongodb://localhost:2707/${process.env.DB_NAME}`)
+mongoose.connect(`mongodb://localhost:27017/${process.env.DB_NAME}`)
 .then(() => {
   console.log(`MongoDB connected to DB ${process.env.DB_NAME}`);
 })
@@ -11,18 +11,18 @@ mongoose.connect(`mongodb://localhost:2707/${process.env.DB_NAME}`)
 });
 
 //Set up schema
-const glossarySchema = new mongoose.Schema({
+const wordsSchema = new mongoose.Schema({
   word: String,
   definition: String
 });
 
-const Glossary = mongoose.model(`${process.env.DB_NAME}`, glossarySchema);
+const Words = mongoose.model(`${process.env.DB_NAME}`, wordsSchema);
 
 //Set up models
 
 //Add word to DB
 const add = (wordObj) => {
-  return Glossary
+  return Words
   .findOneAndUpdate(
     {
       word: wordObj.word,
@@ -30,33 +30,47 @@ const add = (wordObj) => {
     },
     {},
     {upsert: true}
-  );
+  )
 };
 
-//TODO: Find and replace
-// const findWord = () => {
-//   return Glossary
-//   .find({word});
-// };
+//Find word to edit in DB
+const find = (word) => {
+  return Words
+  .find({word})
+};
+
+//Gets all words from the DB
+const getAll = () => {
+  return Words
+    .find();
+}
 
 //Removes word from DB
 const remove = (word) => {
-  return Glossary
-  .deleteOne({word});
-}
+  return Words
+  .deleteOne({word})
+};
 
 //Searches DB for word like term
 const search = (term) => {
-  return Glossary
-  .find({word: `/${term}/i`});
-}
+  return Words
+  .find({word: `/${term}/i`})
+};
+
+//Replace edited word with new word in DB
+const update = (id) => {
+  return Words
+  .findByIdAndRemove(id)
+};
 
 
 //EXPORT MODELS
-modules.export = {
+module.export = {
   add,
+  find,
   remove,
-  search
+  search,
+  update
 }
 
 // TODO: 4. Import the models into any modules that need them
