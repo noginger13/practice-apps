@@ -56,12 +56,23 @@ app.post('/del', (req, res) => {
   })
 })
 
-//Search
-
 //Edit
 
+app.post('/edit', (req, res) => {
+  let wordObj = {};
+  wordObj.word = req.body.word;
+  wordObj.definition = req.body.definition;
 
-
+  db.update(req.body._id, wordObj)
+  .then(() => {
+    console.log(`${req.body.word} was edited!`);
+    res.sendStatus(201);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.sendStatus(500);
+  })
+});
 
 
 app.listen(process.env.PORT);

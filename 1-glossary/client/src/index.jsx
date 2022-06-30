@@ -51,8 +51,17 @@ class App extends React.Component {
     })
   }
 
-  edit(_id, word, definition){
-    var updateObj = {word, definition, _id}
+  edit(id) {
+    let copyGloss = this.state.glossary.slice();
+    for (var term of copyGloss) {
+      if (term._id === id){
+        term.update = true;
+      }
+    }
+    this.setState({glossary: copyGloss})
+  }
+
+  update(updateObj){
     axios.post('/edit', updateObj)
     .then()
     .catch((err) => {
@@ -104,6 +113,8 @@ class App extends React.Component {
         <Glossary
           glossary={this.state.glossary}
           delete={this.delete.bind(this)}
+          edit={this.edit.bind(this)}
+          update={this.update.bind(this)}
           />
       </div>
     )

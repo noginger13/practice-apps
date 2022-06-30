@@ -4,8 +4,8 @@ class Add extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      word: 'apple',
-      definition: 'fruit'
+      word: 'empty',
+      definition: 'void'
     };
   }
 

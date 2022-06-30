@@ -8,6 +8,8 @@ function Glossary(props) {
           return <Term
             term={word}
             delete={props.delete}
+            edit={props.edit}
+            update={props.update}
             />
         })}
       </ol>
