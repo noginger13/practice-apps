@@ -6,6 +6,7 @@ function Glossary(props) {
       <ol>
         {props.glossary.map((word) => {
           return <Term
+            key={word._id}
             term={word}
             delete={props.delete}
             edit={props.edit}

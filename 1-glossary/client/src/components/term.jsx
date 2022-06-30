@@ -21,7 +21,6 @@ class Term extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
     this.props.update(this.state);
   }
 
@@ -38,7 +37,7 @@ class Term extends React.Component {
   render(){
     if (this.props.term.update){
       return (
-        <li key={this.props.term._id}>
+        <li>
           <b>{this.props.term.word}</b>
           : {this.props.term.definition}
           <br></br>
@@ -64,7 +63,7 @@ class Term extends React.Component {
       )
     } else {
       return (
-        <li key={this.props.term._id}>
+        <li>
           <b>{this.props.term.word}</b>
           : {this.props.term.definition}
           <br></br>
