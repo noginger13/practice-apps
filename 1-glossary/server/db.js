@@ -24,10 +24,7 @@ const Words = mongoose.model(`${process.env.DB_NAME}`, wordsSchema);
 const add = (wordObj) => {
   return Words
   .findOneAndUpdate(
-    {
-      word: wordObj.word,
-      definition: wordObj.meanings.definitions[0].definition
-    },
+    {word, definition},
     {},
     {upsert: true}
   )
@@ -72,6 +69,3 @@ module.export = {
   search,
   update
 }
-
-// TODO: 4. Import the models into any modules that need them
-
