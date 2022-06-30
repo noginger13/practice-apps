@@ -8,23 +8,30 @@ class Search extends React.Component {
     };
   }
 
-  // onWordChange(e) {
-  //   e.preventDefault();
-  //   this.setState{word: e.target.value};
-  // }
+  onSearchChange(e) {
+    e.preventDefault();
+    this.setState({search: e.target.value});
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    console.log('search term: ', this.state.search);
+    this.props.search(this.state.search);
+  }
 
   render() {
     return (
       <div>
       <h4>Search</h4>
-      <p>Enter the word you're looking for:</p>
-        <input type="text" name="search" default ="Search a new word"></input>
-        <br></br>
-        <button>
-          <span>
-            Search
-          </span>
+      <label>Search:
+        <input
+        type="text"
+        name="search"
+        onChange={this.onSearchChange.bind(this)}></input>
+        <button onClick={this.onSubmit.bind(this)}>
+          Search
         </button>
+      </label>
       </div>
     )
   }

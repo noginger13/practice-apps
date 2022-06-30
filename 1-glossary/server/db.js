@@ -11,61 +11,58 @@ mongoose.connect(`mongodb://localhost:27017/${process.env.DB_NAME}`)
 });
 
 //Set up schema
-const wordsSchema = new mongoose.Schema({
-  word: String,
-  definition: String
+const wordSchema = new mongoose.Schema({
+  word: {
+    type: String,
+    unique: true
+  },
+  definition: {
+    type: String,
+    default: "Add a definition!"
+  }
 });
 
-const Words = mongoose.model(`${process.env.DB_NAME}`, wordsSchema);
+const Word = mongoose.model(`${process.env.DB_NAME}`, wordSchema);
 
 //Set up models
 
 //Add word to DB
-const add = (wordObj) => {
-  return Words
+const add = ({word, definition}) => {
+  return Word
   .findOneAndUpdate(
     {word, definition},
     {},
     {upsert: true}
   )
+  .exec();
 };
 
-//Find word to edit in DB
-const find = (word) => {
-  return Words
-  .find({word})
-};
-
-//Gets all words from the DB
+//Gets all Word from the DB
 const getAll = () => {
-  return Words
-    .find();
-}
+  return Word
+    .find()
+    .exec();
+};
 
 //Removes word from DB
-const remove = (word) => {
-  return Words
-  .deleteOne({word})
-};
-
-//Searches DB for word like term
-const search = (term) => {
-  return Words
-  .find({word: `/${term}/i`})
+const remove = (id) => {
+  return Word
+  .findByIdAndRemove(id)
+  .exec();
 };
 
 //Replace edited word with new word in DB
-const update = (id) => {
-  return Words
-  .findByIdAndRemove(id)
+const update = (id, wordObj) => {
+  return Word
+  .findByIdAndUpdate(id, wordObj)
+  .exec();
 };
 
 
 //EXPORT MODELS
-module.export = {
+module.exports = {
   add,
-  find,
+  getAll,
   remove,
-  search,
   update
 }
