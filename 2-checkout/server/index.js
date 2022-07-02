@@ -20,18 +20,16 @@ app.use(express.json());
 // Serves up all static and generated assets in ../client/dist.
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-app.get('/cookie', (req, res) => {
-//TODO: return cookie to client
-})
-
-//Form
-app.post('/post', (req, res) => {
-  //TODO: Build querystring and responses
-})
-
-//Checkout
-app.get('/get', (req, res) => {
-  //TODO: Build querystring and responses
+app.post('/api', (req, res) => {
+  console.log(req.session_id);
+  console.log(req.body);
+  db.submit(req.body)
+  .then(() => {
+    res.sendStatus(201);
+  })
+  .catch((err) => {
+    res.sendStatus(404);
+  })
 
 })
 

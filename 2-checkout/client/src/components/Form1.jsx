@@ -30,13 +30,14 @@ class FormOne extends React.Component {
   //Submit
   handleClick(e) {
     e.preventDefault();
-    console.log(this.state);
+    this.props.complete(this.state);
   }
 
   render() {
     return (
     <div>
       <br></br>
+      <h3>Account Information</h3>
       <form>
         <label>Name:
         <input type="text"
