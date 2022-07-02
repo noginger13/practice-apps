@@ -16,16 +16,25 @@ app.use(sessionHandler);
 // Logs the time, session_id, method, and url of incoming requests.
 app.use(logger);
 
+app.use(express.json());
 // Serves up all static and generated assets in ../client/dist.
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-/**** 
- * 
- * 
- * Other routes here....
- *
- * 
- */
+app.get('/cookie', (req, res) => {
+//TODO: return cookie to client
+})
+
+//Form
+app.post('/post', (req, res) => {
+  //TODO: Build querystring and responses
+})
+
+//Checkout
+app.get('/get', (req, res) => {
+  //TODO: Build querystring and responses
+
+})
+
 
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);
